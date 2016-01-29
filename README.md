@@ -2,15 +2,15 @@
 
 This is a study site for the Lynda.com course: [Web Project Workflows with Gulp.js, Git, and Browserify](http://www.lynda.com/Web-Design-tutorials/Web-Project-Workflows-Gulp-js-Git-Browserify/154416-2.html)
 
-# Some Notes...
+## Some Notes...
 
-## 1. Workflow design
+### 1. Workflow design
 
 The workflow outlined in the course starts with `index.html`, the `images` and `data.json` in the `builds/development` folder.  Gulp processes these into the `production` folder with minification and compression, etc.  That means you need to store `components` and `builds/development` in a github repository.
 
 If Gulp generated every file in `builds/**` from `components` then it wouldn't be necessary to store `builds/**` at all which would be much cleaner and less storage on github.
 
-## 2. gulp-browserify is deprecated
+### 2. gulp-browserify is deprecated
 
 To get browserify to work in this process:
 
@@ -46,15 +46,17 @@ To get browserify to work in this process:
 	```
 Prior to the above task all CoffeeScript files have been converted to JS. The above task concatenates all the JS files into a single scripts.js file. Browserify parses that file looking for dependancies and then pulls in jQuery and Mustache and adds them to scripts.js.
 
-## 3. Gulp-if and Environment Variable
+### 3. Gulp-if and Environment Variable
 
 There's a good example of using an Environment variable and gulp-if to conditionally process the piped files to a different outputDir.
 
-## 4 JSON and Mustache
+### 4 JSON and Mustache
 
 There's a good example of how to pull data into a mustache template.
 
 # Useful links
+
+### Writing
 - [HTML](http://www.w3schools.com/html/html5_intro.asp) - Markup
 - [SASS](http://sass-lang.com) - CSS extension language
 - [Compass](http://compass-style.org) - CSS Authoring Framework
@@ -63,18 +65,18 @@ There's a good example of how to pull data into a mustache template.
 - [JSON](http://json.org) - JavaScript Object Notation for data formatting
 - [Mustache](https://github.com/janl/mustache.js) - HTML templating (in this case used to integrate JSON datafeeds)
 
-## Version Control
+### Version Control
 
 - [GIT](http://www.git-scm.com) - Version control SW
 - [GitHub](http://github.com) - Social coding with version control
 
-## Build Process
+### Gulp Build Process
 
 - [Node.js](https://nodejs.org/en/) - Node.js applications
 - [npm](https://www.npmjs.com) - The package manager for JavaScript applications, this is where you can find plugins for gulp
 - [Gulp.js](http://gulpjs.com) - Allows you to stream input through a series of chained plugins to create a custom build process
 
-## Packages
+### Gulp Packages
 
 - [gulp-util](https://www.npmjs.com/package/gulp-util) - Utility functions for gulp plugins
 - [gulp-coffee](https://www.npmjs.com/package/gulp-coffee) - Compiles CoffeeScript
