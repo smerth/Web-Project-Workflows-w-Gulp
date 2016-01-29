@@ -6,9 +6,9 @@ This is a study site for the Lynda.com course: [Web Project Workflows with Gulp.
 
 ## 1. Workflow design
 
-The workflow outlined in the course starts with `index.html`, the `images` and `data.json` in the `builds/development` folder.  Gulp processes these into the production folder with minification and compression, etc.  That means you need to store components and builds/development in a github repository.
+The workflow outlined in the course starts with `index.html`, the `images` and `data.json` in the `builds/development` folder.  Gulp processes these into the `production` folder with minification and compression, etc.  That means you need to store `components` and `builds/development` in a github repository.
 
-If Gulp generated every file in builds/** from components then it wouldn't be necessary to store builds at all which would be much cleaner and better for github.
+If Gulp generated every file in `builds/**` from `components` then it wouldn't be necessary to store `builds/**` at all which would be much cleaner and less storage on github.
 
 ## 2. gulp-browserify is deprecated
 
@@ -44,15 +44,15 @@ To get browserify to work in this process:
 			.pipe(connect.reload())
 	});
 	```
-Prior to the above task all CoffeeScript files have been converted to JS. This task concatenates all the JS files into a single scripts.js file. Browserify parses that file looking for dependancies and then pulls in jQuery and Mustache and adds them to scripts.js
+Prior to the above task all CoffeeScript files have been converted to JS. The above task concatenates all the JS files into a single scripts.js file. Browserify parses that file looking for dependancies and then pulls in jQuery and Mustache and adds them to scripts.js.
 
 ## 3. Gulp-if and Environment Variable
 
-There's a good example of using an Environment variable and gulp-if to conditionally process the piped files to different outputDir.
+There's a good example of using an Environment variable and gulp-if to conditionally process the piped files to a different outputDir.
 
 ## 4 JSON and Mustache
 
-There's a good example of how to pull data into a mustache template
+There's a good example of how to pull data into a mustache template.
 
 # Useful links
 - [HTML](http://www.w3schools.com/html/html5_intro.asp) - Markup
