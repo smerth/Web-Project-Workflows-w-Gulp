@@ -1,79 +1,60 @@
-# Workflows
+# What is this?
 
-This project is built following the Lynda.com course:
+This is a study site for the Lynda.com course: [Web Project Workflows with Gulp.js, Git, and Browserify](http://www.lynda.com/Web-Design-tutorials/Web-Project-Workflows-Gulp-js-Git-Browserify/154416-2.html)
 
-[Web Project Workflows with Gulp.js, Git, and Browserify](http://www.lynda.com/Web-Design-tutorials/Web-Project-Workflows-Gulp-js-Git-Browserify/154416-2.html)
+# Some Notes...
 
-# Issues
+## 1. Workflow design
 
-## 1. Browserify is deprecated 
+The workflow outlined in the course starts with `index.html`, the `images` and `data.json` in the `builds/development` folder.  Gulp processes these into the production folder with minification and compression, etc.  That means you need to store components and builds/development in a github repository.
 
-Section 2 - Importing libraries with Browserify.
+If Gulp generated every file in builds/** from components then it wouldn't be necessary to store builds at all which would be much cleaner and better for github.
 
-The task works as outlined in the course.  The setup is as follows:
+## 2. gulp-browserify is deprecated
 
-1. You need to require the jQuery and Mustache libraries
+To get browserify to work in this process:
 
-```
-npm insall --save-dev jquery
-```
+- You need to install the jQuery and Mustache libraries
+	```
+	npm insall --save-dev jquery
+	```
+	```
+	npm insall --save-dev mustache
+	```
 
+- You need to require the libraries somewhere in the site's code.  
 
-```
-npm insall --save-dev mustache
-```
+	In the CoffeeScript file:
+	```
+	$ = require 'jquery'
+	```
+	and the templating file for Mustache
+	```
+	var Mustache = require('mustache');
+	```
 
-2. You need to require the libaries in the site code.  For the coffeescript file
+- Add Browserify to the JS processing pipeline
+	```js
+	gulp.task('js', function() {
+		gulp.src(jsSources)
+			.pipe(concat('script.js'))
+			.pipe(browserify())
+			.pipe(gulpif(env === 'production', uglify()))
+			.pipe(gulp.dest(outputDir + 'js'))
+			.pipe(connect.reload())
+	});
+	```
+Prior to the above task all CoffeeScript files have been converted to JS. This task concatenates all the JS files into a single scripts.js file. Browserify parses that file looking for dependancies and then pulls in jQuery and Mustache and adds them to scripts.js
 
+## 3. Gulp-if and Environment Variable
 
-```
-$ = require 'jquery'
-```
+There's a good example of using an Environment variable and gulp-if to conditionally process the piped files to different outputDir.
 
+## 4 JSON and Mustache
 
-and the templating file for Mustache
+There's a good example of how to pull data into a mustache template
 
-
-```
-var Mustache = require('mustache');
-```
-3. Add Browserify to the JS processing pipeline
-
-
-```js
-gulp.task('js', function() {	
-	gulp.src(jsSources)
-		.pipe(concat('script.js'))
-		.pipe(browserify())
-		.pipe(gulpif(env === 'production', uglify()))
-		.pipe(gulp.dest(outputDir + 'js'))
-		.pipe(connect.reload())
-});
-```
-scripts.js is piped into Browserify which finds the two libraries are required and goes out and gets them and adds them to sripts.js so that it is a concaentation of all the site .js files and the libaries they require.
-
-Unfortunately this task requires that somewhere in the .js files you require the libraries and that means there is no clear separation between site code and this process step...
-
-There must be a better way to include required libraries into the concatenated .js file.
-
-## 2. Process design
-
-The process outlined in the course places `index.html` and `data.json` in the `builds/development` folder.  That's messy.  I'm of the opinion that nothing in `builds/development` and `builds/production` should be edited by hand.
-
-The process would be better designed if all site files origated in components, let Gulp write everything to the two site folders...
-
-## 3. Cleaner development and production tasks
-
-There should be `gulp dev` and `gulp prod` tasks. Setting the NODE_ENV variable should not need to be called from the terminal prompt.
-
-## 4 minifyHtml is deprecated
-
-This code uses htmlmin instead but the task has been changed as the two plugins don't work the same.
-
-# This project integrates the following software:
-
-## Site basics
-
+# Useful links
 - [HTML](http://www.w3schools.com/html/html5_intro.asp) - Markup
 - [SASS](http://sass-lang.com) - CSS extension language
 - [Compass](http://compass-style.org) - CSS Authoring Framework
@@ -97,7 +78,7 @@ This code uses htmlmin instead but the task has been changed as the two plugins 
 
 - [gulp-util](https://www.npmjs.com/package/gulp-util) - Utility functions for gulp plugins
 - [gulp-coffee](https://www.npmjs.com/package/gulp-coffee) - Compiles CoffeeScript
-- [gulp-browserify](https://www.npmjs.com/package/gulp-compass) - Bundle modules with Browserify.
+- [gulp-browserify](https://www.npmjs.com/package/gulp-compass) - Bundle modules and dependancies with Browserify.
 - [gulp-compass](https://www.npmjs.com/package/gulp-compass) - Compile SASS and Compass
 - [gulp-connect](https://www.npmjs.com/package/gulp-connect) - Run server
 - [gulp-if](https://www.npmjs.com/package/gulp-if) - conditionally pipe into a plugin
@@ -107,16 +88,3 @@ This code uses htmlmin instead but the task has been changed as the two plugins 
 - [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) - Compress Images
 - [imagemin-pngcrush](https://www.npmjs.com/package/gulp-pngcrush) - dependancy of imagemin
 - [gulp-concat](https://www.npmjs.com/package/gulp-concat) - Concatenate files
-
-
-
-
-
-
-
-
-
-
-
-
-
