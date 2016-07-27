@@ -8,13 +8,13 @@
 
 ## View the completed project
 
-(View at localhost:8080)[http://localhost:8080]
+(Completed Project)[http://smerth.github.io/Web_Project_Workflow_With_Gulp/]
 
 
 
 ## Project Overview
 
-This is the completed study project for the Lynda.com course: [Web Project Workflows with Gulp.js, Git, and Browserify](http://www.lynda.com/Web-Design-tutorials/Web-Project-Workflows-Gulp-js-Git-Browserify/154416-2.html)
+This is the completed project for the Lynda.com course: [Web Project Workflows with Gulp.js, Git, and Browserify](http://www.lynda.com/Web-Design-tutorials/Web-Project-Workflows-Gulp-js-Git-Browserify/154416-2.html)
 
 The course shows how to automate the build process for a web application using Gulp.  The build process is based on a simple development workflow.
 
@@ -24,7 +24,7 @@ The course shows how to automate the build process for a web application using G
 4. The ```development``` folder contains your site markup, site assets and uncompressed JS and CSS.  The CSS and JS in the development folder is the result of Gulp tasks that process your SASS to CSS and your CoffeeScript to JS. Gulp then concatenates all the JS files in the components folder into a single file. 
 5. Lastly the Gulp tasks compress CSS, JS, markup and Images into the production folder ready for deployment.
 
-This workflow serves to demonstrate what Gulp does but it is a poor method of organising a real site.  Re-organising the project is the following manner would make it easier to understand and maintain.
+This workflow serves to demonstrate what Gulp does but it is a poor method of organising a real site.  Re-organising the project in the following manner would make it easier to understand and maintain.
 
 1. Instead of having third-part js and your own js in the components folder use Bower to manage all third party libraries.
 2. Create and src folder.  This is the only folder you should write to.
