@@ -1,158 +1,180 @@
-var gulp = require("gulp"),
-    gutil = require("gulp-util"),
-    coffee = require("gulp-coffee"),
-    browserify = require("gulp-browserify"),
-    compass = require("gulp-compass"),
-    connect = require("gulp-connect"),
-    gulpif = require("gulp-if"),
-    uglify = require("gulp-uglify"),
-    htmlmin = require("gulp-htmlmin"),
-    jsonminify = require("gulp-jsonminify"),
-    imagemin = require("gulp-imagemin"),
-    pngcrush = require("imagemin-pngcrush"),
-    concat = require('gulp-concat');
+var gulp = require("gulp");
+var gutil = require("gulp-util");
+var gulpCoffee = require("gulp-coffee");
+var browserify = require("gulp-browserify");
+var compass = require("gulp-compass");
+var gulpif = require("gulp-if");
+var uglify = require("gulp-uglify");
+var htmlmin = require("gulp-htmlmin");
+var jsonminify = require("gulp-jsonminify");
+var imagemin = require("gulp-imagemin");
+var pngcrush = require("imagemin-pngcrush");
+var concat = require("gulp-concat");
+var browserSync = require("browser-sync").create();
 
+// Environment variables
+var env = process.env.NODE_ENV || "development";
+var outputDir;
+var sassStyle;
 
-
-// Create Variables
-var env,
-	coffeeSources,
-	jsSources,
-	sassSources,
-	htmlSources,
-	jsonSources,
-	outputDir,
-	sassStyle;
-
-// Assign variables
-env = process.env.NODE_ENV || 'development';
-
-if (env==='development'){
-	outputDir = 'builds/development/';
-	sassStyle = 'expanded';
-}else{
-	outputDir = 'builds/production/';
-	sassStyle = 'compressed';
+if (env === "development") {
+  outputDir = "builds/development/";
+  sassStyle = "expanded";
+} else {
+  outputDir = "builds/production/";
+  sassStyle = "compressed";
 }
 
-
-// Create Variables for source paths to make code easier to read
-// In this case an array incase you need to pass in other paths...
-coffeeSources = ['components/coffee/*.coffee'];
-// this case you can control the order the files are processed by listing them indviidually
-jsSources = [
-	'components/scripts/rclick.js',
-	'components/scripts/pixgrid.js',
-	'components/scripts/tagline.js',
-	'components/scripts/template.js'
-];
-// We can use a single file to process our sass and rely on imports in our sass code to structure our sass files in a way that stays true to sass.
-sassSources = ['components/sass/style.scss'];
-htmlSources = [outputDir + '*.html'];
-jsonSources = [outputDir + 'js/*.json'];
-
-
 // Just a test task
-gulp.task('log', function() {
-    gutil.log('Workflows are awesome!'); // uses the log function of gulp-util to print to the console
-});
+async function log() {
+  await gutil.log("Workflows are awesome!");
+}
 
 /*
 COFFEE TASK
+First specify where to grab the input for this pipe .src() is a gulp function that grabs the input so most tasks start that way.
 
-First specify where to grab the input for this pipe 
-.src() is a gulp function that grabs the input 
-so most tasks start that way.
+Curly braces allow you to set options (key value pairs) on a gulp config object for the plugin you are piping into. You can find the available options for a plugin by looking at the library the plugin is wrapping. 
 
-Curly braces allow you to set options (key value pairs) on a 
-gulp config object for the plugin you are piping into. 
-You can find the available options for a plugin by looking 
-at the underlaying library the plugin is wrapping. 
-In this case by looking at the coffee language:
-http://coffeescript.org (see usage...) 
+In this case by looking at the coffee language: http://coffeescript.org (see usage...) 
  
-If coffee throws an error processing your coffeescript
-it will crash gulp, unless you catch it and send it 
-somewhere like, maybe... the console!
+If coffee throws an error processing your coffeescript it will crash gulp, unless you catch it and send it somewhere like, maybe... the console!
 */
 
-gulp.task('coffee', function() {
-    gulp.src(coffeeSources)
-        .pipe(coffee({
-                bare: true
-            })
-            .on('error', gutil.log))
-        .pipe(gulp.dest('components/scripts'))
-});
+// Use an array incase you need to pass in other paths...
+var coffeeSources = ["components/coffee/*.coffee"];
+// You can use an es6 arrow function...
+const coffee = () => {
+  return gulp
+    .src(coffeeSources)
+    .pipe(
+      gulpCoffee({
+        bare: true
+      }).on("error", gutil.log)
+    )
+    .pipe(gulp.dest("components/scripts"));
+};
 
-gulp.task('js', function() {	
-	gulp.src(jsSources)
-		.pipe(concat('script.js'))
-		.pipe(browserify())
-		.pipe(gulpif(env === 'production', uglify()))
-		.pipe(gulp.dest(outputDir + 'js'))
-		.pipe(connect.reload())
-});
+// Javascript task
 
-gulp.task('compass', function() {	
-	gulp.src(sassSources)
-		.pipe(compass({
-			sass: 'components/sass',
-			css: outputDir + 'css',
-			image: outputDir + 'images',
-			style: sassStyle,
-			comments: true,
-			sourcemap: true
-		}))
-			.on('error', gutil.log)
-		.pipe(gulp.dest(outputDir + 'css'))
-		.pipe(connect.reload());
-});
+// control the order the files being processed by listing them indviidually in an array
+var jsSources = [
+  "components/scripts/rclick.js",
+  "components/scripts/pixgrid.js",
+  "components/scripts/tagline.js",
+  "components/scripts/template.js"
+];
 
-gulp.task('json', function() {	
-	gulp.src('builds/development/js/*.json')
-	.pipe(gulpif(env === 'production', jsonminify()))
-	.pipe(gulpif(env === 'production', gulp.dest('builds/production/js')))
-		.pipe(connect.reload());
-});
+function js() {
+  return gulp
+    .src(jsSources)
+    .pipe(concat("script.js"))
+    .pipe(browserify())
+    .pipe(gulpif(env === "production", uglify()))
+    .pipe(gulp.dest(outputDir + "js"));
+}
 
-gulp.task('html', function() {	
-	gulp.src(htmlSources)
-		.pipe(connect.reload())
-});
+// Process SASS with Compass and Images
 
-gulp.task('minihtml', function() {
-	gulp.src('builds/development/*.html')
-    	.pipe(htmlmin({collapseWhitespace: true}))
-    	.pipe(gulp.dest('builds/production/'))
-    	.pipe(connect.reload())
-});
+// We can use a single file to process our sass and rely on imports in our sass code to structure our sass files in a way that stays true to sass.
+var sassSources = ["components/sass/style.scss"];
 
-gulp.task('images', function() {
-	gulp.src('builds/development/images/**/*.*')
-		.pipe(gulpif(env === 'production', imagemin({
-			progressive: true,
-			svgoPlugins: [{ removeViewBox: false }],
-			use: [pngcrush()]
-		})))
-		.pipe(gulpif(env === 'production', gulp.dest(outputDir + 'images')))
-		.pipe(connect.reload())
-});
+function sass() {
+  return gulp
+    .src(sassSources)
+    .pipe(
+      compass({
+        sass: "components/sass",
+        css: outputDir + "css",
+        image: outputDir + "images",
+        style: sassStyle,
+        comments: true,
+        sourcemap: true
+      })
+    )
+    .on("error", gutil.log)
+    .pipe(gulp.dest(outputDir + "css"));
+}
 
-gulp.task('watch', function() {
-	gulp.watch(coffeeSources, ['coffee'])
-	gulp.watch(jsSources, ['js'])
-	gulp.watch('builds/development/*.html', ['html', 'minihtml'])
-	gulp.watch('components/sass/**/*.scss', ['compass'])
-	gulp.watch('builds/development/js/*.json', ['json'])
-	gulp.watch('builds/development/images/**/*.*', ['images'])
-});
+// If in production environment compress JSON data in the development folder and put it in the production folder
+var jsonSources = [outputDir + "js/*.json"];
 
-gulp.task('connect', function(){
-	connect.server({
-		root: outputDir,
-		livereload: true
-	});
-});
+function json() {
+  return gulp
+    .src(jsonSources)
+    .pipe(gulpif(env === "production", jsonminify()))
+    .pipe(gulpif(env === "production", gulp.dest("builds/production/js")));
+}
 
-gulp.task('default', ['connect', 'coffee', 'js', 'html', 'compass', 'images', 'json', 'minihtml', 'watch']);
+// html? - I forget what this html function does
+var htmlSources = [outputDir + "*.html"];
+
+function html() {
+  return gulp.src(htmlSources);
+}
+
+// Take the html in dev and minify it then put it into production
+function minihtml() {
+  return gulp
+    .src("builds/development/*.html")
+    .pipe(htmlmin({ collapseWhitespace: true }))
+    .pipe(gulp.dest("builds/production/"));
+}
+
+// Take images in dev and optimize for production
+
+function images() {
+  return gulp
+    .src("builds/development/images/**/*.*")
+    .pipe(
+      gulpif(
+        env === "production",
+        imagemin({
+          progressive: true,
+          svgoPlugins: [{ removeViewBox: false }],
+          use: [pngcrush()]
+        })
+      )
+    )
+    .pipe(gulpif(env === "production", gulp.dest(outputDir + "images")));
+}
+
+// Serve the output folder and watch for changes
+function watch() {
+  browserSync.init({
+    server: {
+      baseDir: outputDir
+    },
+    open: "external"
+  });
+  gulp.watch(coffeeSources, coffee);
+  gulp.watch(jsSources, js);
+  gulp.watch("builds/development/*.html", gulp.series([html, minihtml]));
+  gulp.watch("components/sass/**/*.scss", sass);
+
+  gulp.watch("builds/development/js/*.json", json);
+  gulp.watch("builds/development/images/**/*.*", images);
+  gulp.watch([outputDir]).on("change", browserSync.reload);
+}
+
+exports.log = log;
+exports.coffee = coffee;
+exports.js = js;
+exports.sass = sass;
+exports.json = json;
+exports.html = html;
+exports.minihtml = minihtml;
+exports.images = images;
+
+var develop = gulp.series(
+  coffee,
+  js,
+  html,
+  sass,
+  images,
+  json,
+  minihtml,
+  watch
+);
+
+gulp.task("default", develop);

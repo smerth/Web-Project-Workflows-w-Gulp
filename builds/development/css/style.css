@@ -1,5 +1,5 @@
 @import "http://fonts.googleapis.com/css?family=Patua+One|Inika";
-/* line 5, ../../../../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../../.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -21,45 +21,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../../../../../usr/local/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -73,7 +73,7 @@ body {
 
 /* line 13, ../../../components/sass/_base.scss */
 #content {
-  color: #CC8E94;
+  color: #cc8e94;
   font-size: 2em;
 }
 
@@ -107,14 +107,14 @@ h1 {
 /* line 40, ../../../components/sass/_base.scss */
 h2 {
   font-size: 1.5em;
-  color: #3E2B3D;
+  color: #3e2b3d;
 }
 
 /* line 45, ../../../components/sass/_base.scss */
 p {
   font-size: 1.3em;
   line-height: 1.5em;
-  color: #3E2B3D;
+  color: #3e2b3d;
   margin-bottom: 20px;
   margin-top: 15px;
 }
@@ -173,7 +173,7 @@ section {
 
 /* line 15, ../../../components/sass/_modules.scss */
 .featuredartists {
-  background: brown;
+  background: #ff8e53;
   border-top: 20px solid #239089;
   border-bottom: 50px solid #507356;
 }
@@ -217,7 +217,7 @@ section {
 /* line 50, ../../../components/sass/_modules.scss */
 .featuredartists .artistlist .item {
   min-width: 95px;
-  color: #7c2020;
+  color: #ff6c20;
   width: 18%;
   float: left;
   padding: 1%;
@@ -246,7 +246,7 @@ section {
   -moz-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
-  border-bottom: 50px solid brown;
+  border-bottom: 50px solid #ff8e53;
 }
 @media (min-width: 801px) {
   /* line 70, ../../../components/sass/_modules.scss */
@@ -283,7 +283,7 @@ section {
   -moz-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
-  border-bottom: 50px solid brown;
+  border-bottom: 50px solid #ff8e53;
 }
 @media (min-width: 801px) {
   /* line 81, ../../../components/sass/_modules.scss */
@@ -314,8 +314,8 @@ section {
 /* line 94, ../../../components/sass/_modules.scss */
 .ontour h2 {
   font-size: 1.8em;
-  color: brown;
-  border-top: 1px solid brown;
+  color: #ff8e53;
+  border-top: 1px solid #ff8e53;
   padding-top: 5px;
 }
 /* line 101, ../../../components/sass/_modules.scss */
